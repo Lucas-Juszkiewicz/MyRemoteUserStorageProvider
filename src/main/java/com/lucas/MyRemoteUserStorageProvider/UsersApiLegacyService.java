@@ -16,6 +16,19 @@ public class UsersApiLegacyService {
         this.session = session;
     }
 
+    public User getUserByUserNick(String nick){
+        User user = null;
+
+        try {
+            user = SimpleHttp.doGet( "http://localhost:8081/users/" + nick, session).asJson(User.class);
+        } catch (Exception e) {
+            LOGGER.log(Level.SEVERE, "Error fetching user with nick '" + nick + "' from external service.", e);
+            throw new RuntimeException("Error fetching user with nick '" + nick + "' from external service.", e);
+        }
+
+        return user;
+    }
+
     public User getUserByUserEmail(String email){
         User user = null;
 
