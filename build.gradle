@@ -1,5 +1,6 @@
 plugins {
 	id 'java'
+	id 'application'
 	id 'org.springframework.boot' version '3.3.2'
 	id 'io.spring.dependency-management' version '1.1.6'
 }
@@ -18,10 +19,24 @@ repositories {
 }
 
 dependencies {
+	implementation 'org.springframework.boot:spring-boot-starter'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
 	compileOnly 'org.keycloak:keycloak-services:25.0.1'
 }
 
+application {
+	mainClass.set('com.lucas.MyRemoteUserStorageProvider.MainApplication')
+}
+
+bootJar {
+	mainClassName = 'com.lucas.MyRemoteUserStorageProvider.MainApplication'
+}
+
 tasks.named('test') {
 	useJUnitPlatform()
+}
+
+jar {
+	archiveBaseName.set('my-remote-user-storage-provider')
+//	archiveVersion.set(version as Provider<? extends String>)
 }

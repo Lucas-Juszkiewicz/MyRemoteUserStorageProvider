@@ -1,7 +1,13 @@
 package com.lucas.MyRemoteUserStorageProvider;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+
+@JsonIgnoreProperties(ignoreUnknown = true)
 public class VerifyPasswordResponse {
     private boolean result;
+
+    public VerifyPasswordResponse() {
+    }
 
     public VerifyPasswordResponse(boolean result) {
         this.result = result;
@@ -13,5 +19,12 @@ public class VerifyPasswordResponse {
 
     public void setResult(boolean result) {
         this.result = result;
+    }
+
+    @Override
+    public String toString() {
+        return "VerifyPasswordResponse{" +
+                "result=" + result +
+                '}';
     }
 }

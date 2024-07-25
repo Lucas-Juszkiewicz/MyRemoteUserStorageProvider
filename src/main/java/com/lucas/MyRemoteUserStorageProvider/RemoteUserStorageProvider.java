@@ -33,25 +33,26 @@ public class RemoteUserStorageProvider implements UserStorageProvider, UserLooku
     @Override
     public UserModel getUserById(RealmModel realm, String id) {
         StorageId storageId = new StorageId(id);
-        String email = storageId.getExternalId();
-        return getUserByUsername(realm, email);
+        String username = storageId.getExternalId();
+        return getUserByUsername(realm, username);
     }
 
     @Override
-    public UserModel getUserByUsername(RealmModel realm, String nick) {
+    public UserModel getUserByUsername(RealmModel realm, String username) {
         UserModel returnValue = null;
-        User user = userService.getUserByUserNick(nick);
+        User user = userService.getUserByUserName(username);
 
         if(user!=null){
             returnValue = new UserAdapter(session, realm, model, user);
         }
-
+        System.out.println("User form getUserByUsername in RUSP: " + user);
+        System.out.println("UserAdapter form getUserByUsername in RUSP: " + returnValue);
         return returnValue;
     }
 
     @Override
-    public UserModel getUserByEmail(RealmModel realm, String email) {
-        return getUserByUsername(realm, email);
+    public UserModel getUserByEmail(RealmModel realm, String username) {
+        return getUserByUsername(realm, username);
     }
 
     @Override
@@ -67,6 +68,7 @@ public class RemoteUserStorageProvider implements UserStorageProvider, UserLooku
     @Override
     public boolean isValid(RealmModel realmModel, UserModel user, CredentialInput credentialInput) {
         VerifyPasswordResponse verifyPasswordResponse = userService.verifyUserPassword(user.getUsername(), credentialInput.getChallengeResponse());
+        System.out.println("Pass response: " + verifyPasswordResponse);
 
         if(verifyPasswordResponse == null){
             return false;
