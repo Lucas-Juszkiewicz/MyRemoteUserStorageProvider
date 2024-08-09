@@ -43,6 +43,8 @@ public class UserAdapter extends AbstractUserAdapter {
         return user.getEmail();
     }
 
+    public String getUserId(){return user.getUserId();}
+
     @Override
     public SubjectCredentialManager credentialManager() {
         return new UserCredentialManager(session, realm, this);
@@ -61,6 +63,7 @@ public class UserAdapter extends AbstractUserAdapter {
         attributes.add(UserModel.EMAIL, getEmail());
         attributes.add(UserModel.FIRST_NAME, getFirstName());
         attributes.add(UserModel.LAST_NAME, getLastName());
+        attributes.add("userId", getUserId());
         return attributes;
     }
 
